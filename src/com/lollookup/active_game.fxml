@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1127.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.ActiveGameController">
+    <children>
+        <VBox prefHeight="745.0" prefWidth="1127.0">
+            <children>
+                <VBox prefHeight="372.5" prefWidth="984.0">
+                    <children>
+                        <WebView fx:id="blueTeam" prefHeight="435.0" prefWidth="1127.0" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="372.5" prefWidth="984.0">
+                    <children>
+                        <WebView fx:id="redTeam" prefHeight="411.0" prefWidth="1127.0" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
