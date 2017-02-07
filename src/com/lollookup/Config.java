@@ -9,7 +9,7 @@ import java.io.File;
  */
 public class Config {
 
-    public static String DATA_DIRECTORY = "/data/";
+    public static String DATA_DIRECTORY = "./data/";
 
     public static String STYLE_SHEETS_DIRECTORY = DATA_DIRECTORY + "css/";
 

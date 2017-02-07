@@ -27,5 +27,13 @@ public class ActiveGameController {
         webView.getEngine().loadContent(Files.toString(Config.ACTIVE_GAME_HTML, Charsets.UTF_8));
     }
 
+    private void appendDataToTable() {
+
+    }
+    private void executeScript(String script) {
+        webView.getEngine().executeScript(script);
+    }
+
+
 
 }

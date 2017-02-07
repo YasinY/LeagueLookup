@@ -1,52 +1,84 @@
 <!DOCTYPE html>
+<style type="text/css">
+body {
+background-color: lightgrey;
+}
+.champ {
+border-radius: 60%;
+width: 100px;
+height: 100px;
+}
+.champ:hover {
+opacity: 0.8;
+}
+table {
+font-weight: bold;
+font-family: Arial, sans-serif;
+box-shadow: 0 1px;
+}
+td {
+border: solid 1px #FFF;
+text-align:center;
+height: 30%;
+transition: all 0.3s;
+}
+#blueTeam {
+width:100%;
+background-color:lightblue;
+}
+#redTeam {
+width:100%;
+background-color:darkred;
+}
+
+</style>
 <html>
 <h2>Blue team:</h2>
-<table style="width:100%; background-color:lightblue">
-      <tr>
-        <th>Name</th>
-        <th>Current champion</th>
-        <th>Top 3 champs</th>
-        <th>Rank</th>
-        <th>KDA</th>
-      </tr>
+<table id="blueTeam">
      
-    <tr>
-            <td>jungle ís life</td>
-            <td>
-        <img class="champ" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_0.jpg">
-        </br>
-        Kha'Zix (220.000)
-        </br></td>
-            <td>Ekko (20000)
-            </br> Viktor (2000)
-            </br> Thresh (200)</td>
-          <td>Gold 4</td>
-          <td>3.14:1</td>
-          </tr>
+    <thead>
+        <tr>
+               
+            <th>Name</th>
+               
+            <th>Current champion</th>
+               
+            <th>Top 3 champs</th>
+               
+            <th>Rank</th>
+               
+            <th>KDA</th>
+        </tr>
+    </thead>
+     
+    <tbody>
+
+    </tbody>
 </table>
 
 <h2>Red team:</h2>
-<table style="width:100%; background-color:darkred">
-      <tr>
-        <th>Name</th>
-        <th>Current champion</th>
-        <th>Top 3 champs</th>
-        <th>Rank</th>
-        <th>KDA</th>
-      </tr>
+<table id="redTeam">
      
-    <tr>
-            <td>jungle ís life</td>
-            <td>
-        <img class="champ" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_0.jpg">
-        </br>
-        Kha'Zix (220.000)
-        </br></td>
-            <td>Ekko (20000)
-            </br> Viktor (2000)
-            </br> Thresh (200)</td>
-          <td>Gold 4</td>
-          <td>3.14:1</td>
-          </tr>
+    <thead>
+        <tr>
+               
+            <th>Name</th>
+               
+            <th>Current champion</th>
+               
+            <th>Top 3 champs</th>
+               
+            <th>Rank</th>
+               
+            <th>KDA</th>
+             
+        </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
 </table>
+
 </html>
