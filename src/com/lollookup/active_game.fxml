@@ -8,16 +8,7 @@
     <children>
         <VBox prefHeight="745.0" prefWidth="1127.0">
             <children>
-                <VBox prefHeight="372.5" prefWidth="984.0">
-                    <children>
-                        <WebView fx:id="blueTeam" prefHeight="435.0" prefWidth="1127.0" />
-                    </children>
-                </VBox>
-                <VBox prefHeight="372.5" prefWidth="984.0">
-                    <children>
-                        <WebView fx:id="redTeam" prefHeight="411.0" prefWidth="1127.0" />
-                    </children>
-                </VBox>
+                  <WebView fx:id="webView" prefHeight="756.0" prefWidth="1127.0" />
             </children>
         </VBox>
     </children>

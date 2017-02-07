@@ -1,0 +1,22 @@
+body {
+background-color: lightgrey;
+}
+
+.champ {
+border-radius: 60%;
+width: 100px;
+height: 100px;
+}
+
+table {
+font-weight: bold;
+font-family: Arial, sans-serif;
+box-shadow: 0 1px;
+}
+
+td {
+border: solid 1px #FFF;
+text-align:center;
+height: 30%;
+transition: all 0.3s;
+}

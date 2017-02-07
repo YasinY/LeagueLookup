@@ -11,7 +11,7 @@ public class ActiveGameScene extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("active_game.fxml"));
-        primaryStage.setTitle("LeagueLookup");
+        primaryStage.setTitle("League lookup");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
