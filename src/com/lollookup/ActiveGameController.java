@@ -31,9 +31,8 @@ public class ActiveGameController {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        webEngine.executeScript("var redTeam = document.getElementById('redTeam');" +
-                                "redTeam.insertRow(1).insertCell(0).innerHTML='TEST';" +
-                                "redTeam.insertRow(2).insertCell(0).innerHTML='TEST';");
+                        webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
+                                //"setCurrentChampion('redTeam', '2', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
                     }
                 });
     }
