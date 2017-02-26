@@ -31,7 +31,10 @@ public class ActiveGameController {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
+                        String champName = "kha'zix";
+                        String javaScript = "addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);";
+                        webEngine.executeScript("addName('redTeam', 1, 'yasin');");
+                        //webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);");
                                 //"setCurrentChampion('redTeam', '2', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
                     }
                 });

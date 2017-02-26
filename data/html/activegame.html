@@ -35,13 +35,41 @@
     }
     </style>
     <script>
-        function addSummoner(team, name, currentChampionLink, currentChampionName, currentChampionMasteryPoints ) {
+        function addSummoner(team, name, currentChampionLink, currentChampionName, currentChampionMasteryPoints) {
         var table = document.getElementById(team);
         var row = table.insertRow(table.rows.length);
         var rowLength = row.length;
-        var name = row.insertCell(rowLength).innerHTML=name;
-        var currentChampion = row.insertCell(rowLength).innerHTML=
-        '<img src=' + currentChampionLink + ' class="champ"> </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
+        row.insertCell(rowLength).innerHTML=name; //name
+        var currentChampionImage = new Image();
+        currentChampionImage.onload = function() {
+            row.insertCell(rowLength).innerHTML=
+            '<img src=' + currentChampionLink + ' class="champ"> </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
+        }
+        currentChampionImage.onerror = function() {
+            row.insertCell(rowLength).innerHTML="Failed loading image </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')";
+        }
+        currentChampionImage.src = currentChampionLink; //So the image starts loading
+    }
+
+    function addName(team, row, name) {
+        //Row can only be between 1 to 5
+        var table = document.getElementById(team);
+        var row = table.insertRow(row);
+        row.insertCell(row.length).innerHTML = name;
+    }
+
+    function addCurrentChampion(team, row, currentChampionLink, currentChampionName, currentChampionMasteryPoints, curentChampionKDA, currentChampionWinrate) {
+        var table = document.getElementById(team);
+        var row = table.rows[row];
+        var currentChampionImage = new Image();
+        currentChampionImage.onload = function() {
+            row.insertCell(rowLength).innerHTML=
+            '<img src=' + currentChampionLink + ' class="champ"> </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
+        }
+        currentChampionImage.onerror = function() {
+            row.insertCell(rowLength).innerHTML="Failed loading image </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')";
+        }
+        currentChampionImage.src = currentChampionLink; //So the image starts loading
 
     }
 
@@ -53,9 +81,9 @@
     <thead>
     <tr>
            
-        <th class="name">Name</th>
-           
         <th class="current_champion">Current champion</th>
+
+        <th class="data">Data</th>
            
         <th class="top_3_champions">Top 3 champs</th>
            
@@ -75,10 +103,10 @@
      
     <thead>
     <tr>
-           
-        <th class="name">Name</th>
-           
-        <th class="current_champion">Current champion</th>
+
+        <th class="current_champion">Current champion</th>   
+
+        <th class="data">Name</th>
            
         <th class="top_3_champions">Top 3 champs</th>
            
