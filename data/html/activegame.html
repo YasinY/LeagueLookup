@@ -35,7 +35,10 @@
     }
     </style>
     <script>
-        function addSummoner(team, name, currentChampionLink, currentChampionName, currentChampionMasteryPoints) {
+    function Summoner(team, name, currentChampionData) {
+
+    }
+        function addSummoner(team, name, currentChampionLink, currentChampionName, currentChampionMasteryPoints, currentChampionLevel, topThreeChampions) {
         var table = document.getElementById(team);
         var row = table.insertRow(table.rows.length);
         var rowLength = row.length;
@@ -46,31 +49,9 @@
             '<img src=' + currentChampionLink + ' class="champ"> </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
         }
         currentChampionImage.onerror = function() {
-            row.insertCell(rowLength).innerHTML="Failed loading image </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')";
+            row.insertCell(rowLength).innerHTML='Failed loading image. </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
         }
         currentChampionImage.src = currentChampionLink; //So the image starts loading
-    }
-
-    function addName(team, row, name) {
-        //Row can only be between 1 to 5
-        var table = document.getElementById(team);
-        var row = table.insertRow(row);
-        row.insertCell(row.length).innerHTML = name;
-    }
-
-    function addCurrentChampion(team, row, currentChampionLink, currentChampionName, currentChampionMasteryPoints, curentChampionKDA, currentChampionWinrate) {
-        var table = document.getElementById(team);
-        var row = table.rows[row];
-        var currentChampionImage = new Image();
-        currentChampionImage.onload = function() {
-            row.insertCell(rowLength).innerHTML=
-            '<img src=' + currentChampionLink + ' class="champ"> </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
-        }
-        currentChampionImage.onerror = function() {
-            row.insertCell(rowLength).innerHTML="Failed loading image </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')";
-        }
-        currentChampionImage.src = currentChampionLink; //So the image starts loading
-
     }
 
     </script>

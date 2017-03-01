@@ -32,8 +32,8 @@ public class ActiveGameController {
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
                         String champName = "kha'zix";
-                        String javaScript = "addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);";
-                        webEngine.executeScript("addName('redTeam', 1, 'yasin');");
+                        //String javaScript = "addSummoner('blueTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);";
+                        webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000, 7);");
                         //webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);");
                                 //"setCurrentChampion('redTeam', '2', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
                     }
