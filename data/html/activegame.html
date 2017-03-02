@@ -39,16 +39,46 @@
             width: 100%;
             background-color: darkred;
         }
+
     </style>
     <script type="TEXT/ECMASCRIPT-6">
-
         class ChampionData {
-
+            constructor(name: String, imageUrl: String, masteryPoints: Number, masteryLevel: Number) {
+                this.name = name;
+                this.imageUrl = imageUrl;
+                this.masteryPoints = masteryPoints;
+                this.masteryLevel = masteryLevel;
+            }
         }
         class Summoner {
-            constructor(team, name, currentChampion, topThreeChampions, rank, ) {
-
+            constructor(team: String, name: String, rank: String, currentChampionPlayed: ChampionData, topThreeChampionsPlayed: ChampionData[]) {
+                this.team = team;
+                this.name = name;
+                this.rank = rank;
+                this.currentChampionPlayed = currentChampionPlayed;
+                this.topThreeChampionsPlayed = topThreeChampionsPlayed;
             }
+        }
+
+        function addSummoner(summoner) {
+            if(!summoner instanceof Summoner) {
+                return;
+            }
+            const table = document.getElementById(summoner.team + "Team");
+            const row = table.insertRow(table.rows.length);
+            const rowLength = row.length;
+            row.insertCell(rowLength).innerHTML = summoner.name; //name
+            row.insertCell(rowLength).innerHTML= summoner.rank;
+            const currentChampionImage = new Image();
+            currentChampionImage.onload = function () {
+                const imageSrc = '<img src=' + summoner.currentChampionPlayed.imageUrl + ' class="champ"> </br>';
+                const text = imageSrc + summoner.currentChampionPlayed.name + ' (' + summoner.currentChampionPlayed.masteryPoints + ')';
+                row.insertCell(rowLength).innerHTML =text;
+            }
+            currentChampionImage.onerror = function () {
+                row.insertCell(rowLength).innerHTML = 'Failed loading image. </br> ' + currentChampionName + ' (' + currentChampionMasteryPoints + ')';
+            }
+            currentChampionImage.src = currentChampionLink; //So the image starts loading
         }
 
     </script>
@@ -69,6 +99,7 @@
             }
             currentChampionImage.src = currentChampionLink; //So the image starts loading
         }
+
 
     </script>
 </head>
