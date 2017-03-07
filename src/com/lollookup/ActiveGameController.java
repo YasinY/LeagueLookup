@@ -5,8 +5,10 @@ import com.google.common.io.Files;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
 
+import javax.script.ScriptEngineManager;
 import java.io.IOException;
 
 public class ActiveGameController {
@@ -31,13 +33,22 @@ public class ActiveGameController {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        String champName = "kha'zix";
-                        //String javaScript = "addSummoner('blueTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);";
-                        webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000, 'GOLD 5');");
-                        //webEngine.executeScript("addSummoner('redTeam', 'test', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'khazix', 2000);");
-                                //"setCurrentChampion('redTeam', '2', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 'KhaZix', 2000);");
+                        webEngine.executeScript("addSummoner();");
                     }
                 });
+        webEngine.getLoadWorker().exceptionProperty().addListener( (ov, t, t1) ->  System.out.println("Received exception: "+ t1.getMessage()));
+        webEngine.setOnError(System.out::println);
+        final ScriptEngineManager engineManager = new ScriptEngineManager();
+        engineManager.getEngineFactories().forEach(factory -> {
+            System.out.println("=====================");
+            System.out.println("Engine name:" + factory.getEngineName());
+            System.out.println("Engine version:" + factory.getEngineVersion());
+            System.out.println("Language name:" + factory.getLanguageName());
+            System.out.println("Language version:" + factory.getLanguageVersion());
+            factory.getNames().forEach(System.out::println);
+        });
+
+
     }
 
     private void appendDataToTable() {
