@@ -19,7 +19,7 @@ class Summoner {
         return this.team;
     }
     public getRank() {
-        return this.team;
+        return this.rank;
     }
 
     public getCurrentChampionPlayed() {
@@ -58,15 +58,17 @@ class ChampionData {
 
 }
 
-function addSummoner(summoner: Summoner) {
+function addSummoner(summoner: Summoner = null) {
+    if(summoner == null) {
+        return;
+    }
     let table = document.getElementById(summoner.getTeam() + "Team");
     let row = (<HTMLTableElement>table).insertRow(table.children.length);
     let length = row.cells.length;
-    let currentChampionPlayed = summoner.getCurrentChampionPlayed();
+    //row.insertCell(length).innerHTML = summoner.getName(); //name
+    insertChampion(row, summoner.getCurrentChampionPlayed(), ...summoner.getTopThreeChampionsPlayed());
     row.insertCell(length).innerHTML = summoner.getName(); //name
     row.insertCell(length).innerHTML= summoner.getRank();
-    insertChampion(row, summoner.getCurrentChampionPlayed(), ...summoner.getTopThreeChampionsPlayed());
-
 }
 function insertChampion(row, ...championData: ChampionData[]) {
     const image = new Image();

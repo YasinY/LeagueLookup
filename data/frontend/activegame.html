@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        var Summoner = (function () {
+            function Summoner(name, team, rank, currentChampionPlayed) {
+                var topThreeChampionsPlayed = [];
+                for (var _i = 4; _i < arguments.length; _i++) {
+                    topThreeChampionsPlayed[_i - 4] = arguments[_i];
+                }
+                this.name = name;
+                this.team = team;
+                this.rank = rank;
+                this.currentChampionPlayed = currentChampionPlayed;
+                this.topThreeChampionsPlayed = topThreeChampionsPlayed;
+            }
+            Summoner.prototype.getName = function () {
+                return this.name;
+            };
+            Summoner.prototype.getTeam = function () {
+                return this.team;
+            };
+            Summoner.prototype.getRank = function () {
+                return this.rank;
+            };
+            Summoner.prototype.getCurrentChampionPlayed = function () {
+                return this.currentChampionPlayed;
+            };
+            Summoner.prototype.getTopThreeChampionsPlayed = function () {
+                return this.topThreeChampionsPlayed;
+            };
+            return Summoner;
+        }());
+        var ChampionData = (function () {
+            function ChampionData(name, imageUrl, masteryPoints, masteryLevel) {
+                if (name === void 0) { name = "none"; }
+                if (imageUrl === void 0) { imageUrl = ""; }
+                if (masteryPoints === void 0) { masteryPoints = 0; }
+                if (masteryLevel === void 0) { masteryLevel = 1; }
+                this.name = name;
+                this.imageUrl = imageUrl;
+                this.masteryPoints = masteryPoints;
+                this.masteryLevel = masteryLevel;
+            }
+            ChampionData.prototype.getName = function () {
+                return this.name;
+            };
+            ChampionData.prototype.getImageUrl = function () {
+                return this.imageUrl;
+            };
+            ChampionData.prototype.getMasteryPoints = function () {
+                return this.masteryPoints;
+            };
+            ChampionData.prototype.getMasteryLevel = function () {
+                return this.masteryLevel;
+            };
+            return ChampionData;
+        }());
+        function addSummoner(summoner) {
+            if (summoner === void 0) { summoner = null; }
+            if (summoner == null) {
+                return;
+            }
+            var table = document.getElementById(summoner.getTeam() + "Team");
+            var row = table.insertRow(table.rows.length);
+            var length = row.cells.length;
+            //row.insertCell(length).innerHTML = summoner.getName(); //name
+            insertChampion.apply(void 0, [row, summoner.getCurrentChampionPlayed()].concat(summoner.getTopThreeChampionsPlayed()));
+            row.insertCell(length).innerHTML = summoner.getRank();
+            row.insertCell(length).innerHTML = summoner.getName(); //name
+        }
+        function insertChampion(row) {
+            var championData = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                championData[_i - 1] = arguments[_i];
+            }
+            var image = new Image();
+            var rowLength = row.length;
+            var _loop_1 = function(champion) {
+                image.onload = function () {
+                    row.insertCell(rowLength).innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                };
+                image.onerror = function () {
+                    row.insertCell(rowLength).innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                };
+                image.src = champion.getImageUrl(); //So the image starts loading
+            };
+            for (var _a = 0, championData_1 = championData; _a < championData_1.length; _a++) {
+                var champion = championData_1[_a];
+                _loop_1(champion);
+            }
+        }
+
+    </script>
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+
+        .champ {
+            border-radius: 60%;
+            width: 100px;
+            height: 100px;
+        }
+
+        .champ:hover {
+            opacity: 0.8;
+        }
+
+        table {
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 1px;
+        }
+
+        td {
+            border: solid 1px #FFA;
+            text-align: center;
+            height: 30%;
+            transition: all 0.3s;
+        }
+
+        #blueTeam {
+            width: 100%;
+            background-color: lightblue;
+        }
+
+        #redTeam {
+            width: 100%;
+            background-color: darkred;
+        }
+
+    </style>
+</head>
+<h2>Blue team:</h2>
+<table id="blueTeam">
+     
+    <thead>
+    <tr>
+           
+        <th class="current_champion">Current champion</th>
+
+        <th class="data">Data</th>
+           
+        <th class="rank">Rank</th>
+
+        <th class="top_3_champions">Top 3 champs</th>
+    </tr>
+    </thead>
+     
+    <tbody>
+
+    </tbody>
+</table>
+
+<h2>Red team:</h2>
+<table id="redTeam">
+     
+    <thead>
+    <tr>
+
+        <th class="current_champion">Current champion</th>
+           
+
+        <th class="data">Data</th>
+           
+        <th class="rank">Rank</th>
+
+        <th class="top_3_champions">Top 3 champs</th>
+         
+    </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
+</table>
+
+</html>
