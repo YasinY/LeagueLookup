@@ -65,17 +65,10 @@ function addSummoner(summoner: Summoner) {
     let currentChampionPlayed = summoner.getCurrentChampionPlayed();
     row.insertCell(length).innerHTML = summoner.getName(); //name
     row.insertCell(length).innerHTML= summoner.getRank();
-    insertChampionImage(row, summoner.getCurrentChampionPlayed(), summoner.getTopThreeChampionsPlayed().prototype.every());
-    const currentChampionImage = new Image();
-    currentChampionImage.onload = function () {
-        row.insertCell(length).innerHTML ='<img src=' + currentChampionPlayed.getImageUrl() + ' class="champ"> </br> ' + currentChampionPlayed.getName() + ' (' + currentChampionPlayed.getMasteryPoints() + ')';
-    }
-    currentChampionImage.onerror = function () {
-        row.insertCell(length).innerHTML = 'Failed loading image. </br> ' + currentChampionPlayed.getName() + ' (' + currentChampionPlayed.getMasteryPoints() + ')';
-    }
-    currentChampionImage.src = currentChampionPlayed.getImageUrl(); //So the image starts loading
+    insertChampion(row, summoner.getCurrentChampionPlayed(), ...summoner.getTopThreeChampionsPlayed());
+
 }
-function insertChampionImage(row, ...championData: ChampionData[]) {
+function insertChampion(row, ...championData: ChampionData[]) {
     const image = new Image();
     let rowLength = row.length;
     for (let champion of championData) {
