@@ -34,15 +34,23 @@
             return Summoner;
         }());
         var ChampionData = (function () {
-            function ChampionData(name, imageUrl, masteryPoints, masteryLevel) {
+            function ChampionData(name, imageUrl, masteryPoints, masteryLevel, winRate, averageKDA, averageCs, gamesPlayed) {
                 if (name === void 0) { name = "none"; }
                 if (imageUrl === void 0) { imageUrl = ""; }
                 if (masteryPoints === void 0) { masteryPoints = 0; }
                 if (masteryLevel === void 0) { masteryLevel = 1; }
+                if (winRate === void 0) { winRate = 0; }
+                if (averageKDA === void 0) { averageKDA = 0; }
+                if (averageCs === void 0) { averageCs = 0; }
+                if (gamesPlayed === void 0) { gamesPlayed = 0; }
                 this.name = name;
                 this.imageUrl = imageUrl;
                 this.masteryPoints = masteryPoints;
                 this.masteryLevel = masteryLevel;
+                this.winRate = winRate;
+                this.averageKDA = averageKDA;
+                this.averageCs = averageCs;
+                this.gamesPlayed = gamesPlayed;
             }
             ChampionData.prototype.getName = function () {
                 return this.name;
@@ -56,6 +64,18 @@
             ChampionData.prototype.getMasteryLevel = function () {
                 return this.masteryLevel;
             };
+            ChampionData.prototype.getWinRate = function () {
+                return this.winRate;
+            };
+            ChampionData.prototype.getAverageKDA = function () {
+                return this.averageKDA;
+            };
+            ChampionData.prototype.getAverageCs = function () {
+                return this.averageCs;
+            };
+            ChampionData.prototype.getGamesPlayed = function () {
+                return this.gamesPlayed;
+            };
             return ChampionData;
         }());
         function addSummoner(summoner) {
@@ -64,32 +84,64 @@
                 return;
             }
             var table = document.getElementById(summoner.getTeam() + "Team");
-            var row = table.insertRow(table.rows.length);
-            var length = row.cells.length;
-            //row.insertCell(length).innerHTML = summoner.getName(); //name
-            insertChampion.apply(void 0, [row, summoner.getCurrentChampionPlayed()].concat(summoner.getTopThreeChampionsPlayed()));
-            row.insertCell(length).innerHTML = summoner.getRank();
-            row.insertCell(length).innerHTML = summoner.getName(); //name
+            var row = table.insertRow(table.rows.length); //table.rows.length!!!
+            var currentChampionPlayed = summoner.getCurrentChampionPlayed();
+            insertChampion(row, 0, currentChampionPlayed);
+            row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
+            row.insertCell(2).innerHTML = summoner.getRank();
+            insertChampion.apply(void 0, [row, 3].concat(summoner.getTopThreeChampionsPlayed()));
         }
-        function insertChampion(row) {
-            var championData = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                championData[_i - 1] = arguments[_i];
+        function insertChampion(row, rowIndex) {
+            var champions = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                champions[_i - 2] = arguments[_i];
             }
-            var image = new Image();
-            var rowLength = row.length;
+            var cell = row.insertCell(rowIndex);
             var _loop_1 = function(champion) {
+                var image = new Image();
                 image.onload = function () {
-                    row.insertCell(rowLength).innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                    cell.innerHTML += '</br> <img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel() + " </br>";
                 };
                 image.onerror = function () {
-                    row.insertCell(rowLength).innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                    cell.innerHTML += '</br> Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
                 };
                 image.src = champion.getImageUrl(); //So the image starts loading
             };
-            for (var _a = 0, championData_1 = championData; _a < championData_1.length; _a++) {
-                var champion = championData_1[_a];
+            for (var _a = 0, champions_1 = champions; _a < champions_1.length; _a++) {
+                var champion = champions_1[_a];
                 _loop_1(champion);
+            }
+        }
+        function insertChampionPlayed(row, champion) {
+            var cell = row.insertCell(0);
+            var image = new Image();
+            image.onload = function () {
+                cell.innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
+            };
+            image.onerror = function () {
+                cell.innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+            };
+            image.src = champion.getImageUrl(); //So the image starts loading
+        }
+        function insertTopThreeChampions(row) {
+            var champions = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                champions[_i - 1] = arguments[_i];
+            }
+            var cell = row.insertCell(3);
+            var _loop_2 = function(i) {
+                var image = new Image();
+                var champion = champions[i];
+                image.onload = function () {
+                    cell.innerHTML += '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
+                };
+                image.onerror = function () {
+                    cell.innerHTML += 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                };
+                image.src = champion.getImageUrl(); //So the image starts loading
+            };
+            for (var i = 0; i <= 3; i++) {
+                _loop_2(i);
             }
         }
 

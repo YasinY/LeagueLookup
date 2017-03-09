@@ -33,7 +33,7 @@ public class ActiveGameController {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        webEngine.executeScript("addSummoner(new Summoner('NameHere', 'red', 'gold 5', new ChampionData('KhaZix', 'http://www.google.com/', 2000, 7), new ChampionData('Camille', 'http://www.google.com/', 2000, 7)));");
+                        webEngine.executeScript("addSummoner(new Summoner('Name!:)', 'red', 'gold 5', new ChampionData('KhaZix', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300)));");
                     }
                 });
         webEngine.getLoadWorker().exceptionProperty().addListener( (ov, t, t1) ->  System.out.println("Received exception: "+ t1.getMessage()));

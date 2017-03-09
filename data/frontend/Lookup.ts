@@ -12,12 +12,15 @@ class Summoner {
         this.currentChampionPlayed = currentChampionPlayed;
         this.topThreeChampionsPlayed = topThreeChampionsPlayed;
     }
+
     public getName() {
         return this.name;
     }
+
     public getTeam() {
         return this.team;
     }
+
     public getRank() {
         return this.rank;
     }
@@ -25,6 +28,7 @@ class Summoner {
     public getCurrentChampionPlayed() {
         return this.currentChampionPlayed;
     }
+
     public getTopThreeChampionsPlayed() {
         return this.topThreeChampionsPlayed;
     }
@@ -35,51 +39,104 @@ class ChampionData {
     private imageUrl: string;
     private masteryPoints: number;
     private masteryLevel: number;
+    private winRate: number;
+    private averageKDA: number;
+    private averageCs: number;
+    private gamesPlayed: number;
 
-    constructor(name: string ="none", imageUrl: string = "", masteryPoints: number = 0, masteryLevel: number = 1) {
+
+    constructor(name: string = "none", imageUrl: string = "", masteryPoints: number = 0, masteryLevel: number = 1, winRate: number = 0, averageKDA: number = 0, averageCs: number = 0, gamesPlayed: number = 0) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.masteryPoints = masteryPoints;
         this.masteryLevel = masteryLevel;
+        this.winRate = winRate;
+        this.averageKDA = averageKDA;
+        this.averageCs = averageCs;
+        this.gamesPlayed = gamesPlayed;
     }
 
     public getName() {
         return this.name;
     }
+
     public getImageUrl() {
         return this.imageUrl;
     }
+
     public getMasteryPoints() {
         return this.masteryPoints;
     }
+
     public getMasteryLevel() {
         return this.masteryLevel;
+    }
+
+    public getWinRate() {
+        return this.winRate;
+    }
+
+    public getAverageKDA() {
+        return this.averageKDA;
+    }
+
+    public getAverageCs() {
+        return this.averageCs;
+    }
+
+    public getGamesPlayed() {
+        return this.gamesPlayed;
     }
 
 }
 
 function addSummoner(summoner: Summoner = null) {
-    if(summoner == null) {
+    if (summoner == null) {
         return;
     }
     let table = document.getElementById(summoner.getTeam() + "Team");
-    let row = (<HTMLTableElement>table).insertRow(table.children.length);
-    let length = row.cells.length;
-    //row.insertCell(length).innerHTML = summoner.getName(); //name
-    insertChampion(row, summoner.getCurrentChampionPlayed(), ...summoner.getTopThreeChampionsPlayed());
-    row.insertCell(length).innerHTML = summoner.getName(); //name
-    row.insertCell(length).innerHTML= summoner.getRank();
+    let row = (<HTMLTableElement>table).insertRow(table.children.length); //table.rows.length!!!
+    let currentChampionPlayed = summoner.getCurrentChampionPlayed();
+    insertChampion(row, 0, currentChampionPlayed);
+    row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
+    row.insertCell(2).innerHTML = summoner.getRank();
+    insertChampion(row, 3, ...summoner.getTopThreeChampionsPlayed());
 }
-function insertChampion(row, ...championData: ChampionData[]) {
-    const image = new Image();
-    let rowLength = row.length;
-    for (let champion of championData) {
+function insertChampion(row, rowIndex, ...champions: ChampionData[]) {
+    let cell = row.insertCell(rowIndex);
+    for(let champion of champions) {
+        let image = new Image();
         image.onload = function () {
-            row.insertCell(rowLength).innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
-        }
+            cell.innerHTML += '</br> <img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
+        };
         image.onerror = function () {
-            row.insertCell(rowLength).innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
-        }
+            cell.innerHTML += '</br> Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+        };
+        image.src = champion.getImageUrl(); //So the image starts loading
+    }
+}
+function insertChampionPlayed(row, champion: ChampionData) {
+    let cell = row.insertCell(0);
+    let image = new Image();
+    image.onload = function () {
+        cell.innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
+    };
+    image.onerror = function () {
+        cell.innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+    };
+    image.src = champion.getImageUrl(); //So the image starts loading
+}
+function insertTopThreeChampions(row, ...champions: ChampionData[]) {
+    let cell = row.insertCell(3);
+    for(let i = 0; i <= 3; i++) {
+        let image = new Image();
+        let champion = champions[i];
+        image.onload = function () {
+            cell.innerHTML += '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
+        };
+        image.onerror = function () {
+            cell.innerHTML += 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+        };
         image.src = champion.getImageUrl(); //So the image starts loading
     }
 }
