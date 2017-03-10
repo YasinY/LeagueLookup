@@ -33,7 +33,7 @@ public class ActiveGameController {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        webEngine.executeScript("addSummoner(new Summoner('Name!:)', 'red', 'gold 5', new ChampionData('KhaZix', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://www.google.com/', 2000, 7, 52.3, 3.14, 50, 300)));");
+                        webEngine.executeScript("addSummoner(new Summoner('SummonerName!!!', 'blue', 'gold 5', new ChampionData('KhaZix', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 2000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 3000000, 7, 52.3, 3.14, 50, 300), new ChampionData('Camille', 'http://ddragon.leagueoflegends.com/cdn/7.3.3/img/spell/FlashFrost.png', 2000, 7, 52.3, 3.14, 50, 300)));");
                     }
                 });
         webEngine.getLoadWorker().exceptionProperty().addListener( (ov, t, t1) ->  System.out.println("Received exception: "+ t1.getMessage()));

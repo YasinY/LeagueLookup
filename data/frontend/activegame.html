@@ -16,6 +16,7 @@
                 this.currentChampionPlayed = currentChampionPlayed;
                 this.topThreeChampionsPlayed = topThreeChampionsPlayed;
             }
+
             Summoner.prototype.getName = function () {
                 return this.name;
             };
@@ -35,14 +36,30 @@
         }());
         var ChampionData = (function () {
             function ChampionData(name, imageUrl, masteryPoints, masteryLevel, winRate, averageKDA, averageCs, gamesPlayed) {
-                if (name === void 0) { name = "none"; }
-                if (imageUrl === void 0) { imageUrl = ""; }
-                if (masteryPoints === void 0) { masteryPoints = 0; }
-                if (masteryLevel === void 0) { masteryLevel = 1; }
-                if (winRate === void 0) { winRate = 0; }
-                if (averageKDA === void 0) { averageKDA = 0; }
-                if (averageCs === void 0) { averageCs = 0; }
-                if (gamesPlayed === void 0) { gamesPlayed = 0; }
+                if (name === void 0) {
+                    name = "none";
+                }
+                if (imageUrl === void 0) {
+                    imageUrl = "";
+                }
+                if (masteryPoints === void 0) {
+                    masteryPoints = 0;
+                }
+                if (masteryLevel === void 0) {
+                    masteryLevel = 1;
+                }
+                if (winRate === void 0) {
+                    winRate = 0;
+                }
+                if (averageKDA === void 0) {
+                    averageKDA = 0;
+                }
+                if (averageCs === void 0) {
+                    averageCs = 0;
+                }
+                if (gamesPlayed === void 0) {
+                    gamesPlayed = 0;
+                }
                 this.name = name;
                 this.imageUrl = imageUrl;
                 this.masteryPoints = masteryPoints;
@@ -52,6 +69,7 @@
                 this.averageCs = averageCs;
                 this.gamesPlayed = gamesPlayed;
             }
+
             ChampionData.prototype.getName = function () {
                 return this.name;
             };
@@ -79,7 +97,9 @@
             return ChampionData;
         }());
         function addSummoner(summoner) {
-            if (summoner === void 0) { summoner = null; }
+            if (summoner === void 0) {
+                summoner = null;
+            }
             if (summoner == null) {
                 return;
             }
@@ -97,53 +117,30 @@
                 champions[_i - 2] = arguments[_i];
             }
             var cell = row.insertCell(rowIndex);
-            var _loop_1 = function(champion) {
-                var image = new Image();
-                image.onload = function () {
-                    cell.innerHTML += '</br> <img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel() + " </br>";
+            var _loop_1 = function (champion) {
+                var champImage = new Image();
+                var masteryImage = new Image();
+                var masteryUrl = "http://sh0ck.bplaced.net/league_assets/championmastery_images/mastery_" + champion.getMasteryLevel() + ".png";
+                masteryImage.onload = function () {
+                    champImage.onload = function () {
+                        cell.innerHTML += '<div class="champContainer"> <img class="mastery" src=' + masteryUrl + '> <img class="champion" src=' + champion.getImageUrl() + ' class="mastery"> </br> ' + champion.getName() + ' </br> (' + champion.getMasteryPoints() + ') </div>';
+                    };
+                    champImage.onerror = function () {
+                        cell.innerHTML += '</br><div class="champContainer">Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel() + "</div>";
+                    };
+                    champImage.src = champion.getImageUrl(); //So the image starts loading
                 };
-                image.onerror = function () {
-                    cell.innerHTML += '</br> Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
+                masteryImage.onerror = function () {
+                    cell.innerHTML += 'Could not load champ mastery assets</br> ' + champion.getName() + ': Mastery points: ' + champion.getMasteryPoints() + ", Mastery level: " + champion.getMasteryLevel() + "</br>";
                 };
-                image.src = champion.getImageUrl(); //So the image starts loading
+                masteryImage.src = masteryUrl;
             };
             for (var _a = 0, champions_1 = champions; _a < champions_1.length; _a++) {
                 var champion = champions_1[_a];
                 _loop_1(champion);
             }
         }
-        function insertChampionPlayed(row, champion) {
-            var cell = row.insertCell(0);
-            var image = new Image();
-            image.onload = function () {
-                cell.innerHTML = '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
-            };
-            image.onerror = function () {
-                cell.innerHTML = 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
-            };
-            image.src = champion.getImageUrl(); //So the image starts loading
-        }
-        function insertTopThreeChampions(row) {
-            var champions = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                champions[_i - 1] = arguments[_i];
-            }
-            var cell = row.insertCell(3);
-            var _loop_2 = function(i) {
-                var image = new Image();
-                var champion = champions[i];
-                image.onload = function () {
-                    cell.innerHTML += '<img src=' + champion.getImageUrl() + ' class="champ"> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel();
-                };
-                image.onerror = function () {
-                    cell.innerHTML += 'Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel();
-                };
-                image.src = champion.getImageUrl(); //So the image starts loading
-            };
-            for (var i = 0; i <= 3; i++) {
-                _loop_2(i);
-            }
-        }
+
 
     </script>
     <style>
@@ -151,14 +148,26 @@
             background-color: lightgrey;
         }
 
-        .champ {
-            border-radius: 60%;
-            width: 100px;
-            height: 100px;
+        .champContainer {
+            display: inline-block;
+            position: relative;
+            padding-left: 0;
         }
 
-        .champ:hover {
-            opacity: 0.8;
+        .champContainer .mastery {
+            position: relative;
+        }
+
+        .champContainer .champion {
+            position: absolute;
+            width: 85.7%;
+            height: 70px;
+            top: 6%;
+            left: 4px;
+        }
+
+        .champContainer .champion:hover {
+            opacity: 0.9;
         }
 
         table {
