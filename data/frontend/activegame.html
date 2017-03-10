@@ -108,8 +108,22 @@
             var currentChampionPlayed = summoner.getCurrentChampionPlayed();
             insertChampion(row, 0, currentChampionPlayed);
             row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
-            row.insertCell(2).innerHTML = summoner.getRank();
+            insertRank(row, summoner.getRank());
             insertChampion.apply(void 0, [row, 3].concat(summoner.getTopThreeChampionsPlayed()));
+        }
+        function insertRank(row, summonerRank) {
+            var tier = summonerRank.split(" ")[0];
+            var imageUrl = "http://sh0ck.bplaced.net/league_assets/rank_images/" + tier + ".png";
+            var rank = new Image();
+            var cell = row.insertCell(2);
+            rank.onload = function () {
+                cell.innerHTML = '<img class="rankImage" src=' + imageUrl + '>';
+            }
+            rank.onerror = function () {
+                cell.innerHTML = summonerRank;
+            }
+            rank.src=imageUrl;
+            //row.insertCell(2).innerHTML = "http://sh0ck.bplaced.net/league_assets/rank_images/mastery_" + summonerRank + ".png"
         }
         function insertChampion(row, rowIndex) {
             var champions = [];
@@ -168,6 +182,10 @@
 
         .champContainer .champion:hover {
             opacity: 0.9;
+        }
+        .rankImage {
+            width: 50%;
+            height:70%;
         }
 
         table {
