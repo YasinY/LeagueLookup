@@ -99,27 +99,41 @@ function addSummoner(summoner: Summoner = null) {
     let currentChampionPlayed = summoner.getCurrentChampionPlayed();
     insertChampion(row, 0, currentChampionPlayed);
     row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
-    row.insertCell(2).innerHTML = summoner.getRank();
+    insertRank(row, summoner.getRank());
     insertChampion(row, 3, ...summoner.getTopThreeChampionsPlayed());
+}
+function insertRank(row, summonerRank) {
+    let tier = summonerRank.split(" ")[0];
+    let imageUrl = "http://sh0ck.bplaced.net/league_assets/rank_images/" + tier + ".png";
+    let rank = new Image();
+    let cell = row.insertCell(2);
+    rank.onload = function () {
+        cell.innerHTML = '<img class="rankImage" src=' + imageUrl + '>';
+    }
+    rank.onerror = function () {
+        cell.innerHTML = summonerRank;
+    }
+    rank.src=imageUrl;
+    //row.insertCell(2).innerHTML = "http://sh0ck.bplaced.net/league_assets/rank_images/mastery_" + summonerRank + ".png"
 }
 function insertChampion(row, rowIndex, ...champions: ChampionData[]) {
     let cell = row.insertCell(rowIndex);
     for(let champion of champions) {
         let champImage = new Image();
         let masteryImage = new Image();
-        masteryImage.onload = function() {
-
-        };
-        champImage.onload = function () {
-            cell.innerHTML += '<div class="champContainer"> <img class="mastery" src='+masteryUrl+'> <img src=' + champion.getImageUrl() + '> </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') </br> Mastery level: ' + champion.getMasteryLevel() + "</div>";
+        let masteryUrl = "http://sh0ck.bplaced.net/league_assets/championmastery_images/mastery_" + champion.getMasteryLevel() + ".png";
+        masteryImage.onload = function () {
+            champImage.onload = function () {
+                cell.innerHTML += '<div class="champContainer"> <img class="mastery" src=' + masteryUrl + '> <img class="champion" src=' + champion.getImageUrl() + ' class="mastery"> </br> ' + champion.getName() + ' </br> (' + champion.getMasteryPoints() + ') </div>';
+            };
+            champImage.onerror = function () {
+                cell.innerHTML += '</br><div class="champContainer">Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel() + "</div>";
+            };
+            champImage.src = champion.getImageUrl(); //So the image starts loading
         };
         masteryImage.onerror = function () {
-
+            cell.innerHTML += 'Could not load champ mastery assets</br> ' + champion.getName() + ': Mastery points: ' + champion.getMasteryPoints() + ", Mastery level: " + champion.getMasteryLevel() + "</br>";
         };
-        champImage.onerror = function () {
-            cell.innerHTML += '</br><div class="champContainer">Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel() + "</div>";
-        };
-        let masteryUrl = "http://sh0ck.bplaced.net/championmastery_images/mastery_" + champion.getMasteryLevel() + ".jpg";
-        champImage.src = champion.getImageUrl(); //So the image starts loading
+        masteryImage.src = masteryUrl;
     }
 }
