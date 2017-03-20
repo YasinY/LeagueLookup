@@ -1,4 +1,4 @@
-package com.lollookup;
+package com.lollookup.scene.activegame;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

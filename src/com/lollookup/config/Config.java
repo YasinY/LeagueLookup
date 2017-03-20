@@ -1,4 +1,4 @@
-package com.lollookup;
+package com.lollookup.config;
 
 import java.io.File;
 
@@ -9,6 +9,12 @@ import java.io.File;
  */
 public class Config {
 
+    public static double VERSION = 1;
+
+    public static String USER_DIR = System.getProperty("user.home") + "/";
+
+    public static String CACHE = USER_DIR + "leaguelookup/";
+    public static String RELATIVE_DATA_DIRECTORY = CACHE + "data/";
     public static String DATA_DIRECTORY = "./data/";
 
     public static String STYLE_SHEETS_DIRECTORY = DATA_DIRECTORY + "css/";

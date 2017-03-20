@@ -16,7 +16,6 @@
                 this.currentChampionPlayed = currentChampionPlayed;
                 this.topThreeChampionsPlayed = topThreeChampionsPlayed;
             }
-
             Summoner.prototype.getName = function () {
                 return this.name;
             };
@@ -36,30 +35,14 @@
         }());
         var ChampionData = (function () {
             function ChampionData(name, imageUrl, masteryPoints, masteryLevel, winRate, averageKDA, averageCs, gamesPlayed) {
-                if (name === void 0) {
-                    name = "none";
-                }
-                if (imageUrl === void 0) {
-                    imageUrl = "";
-                }
-                if (masteryPoints === void 0) {
-                    masteryPoints = 0;
-                }
-                if (masteryLevel === void 0) {
-                    masteryLevel = 1;
-                }
-                if (winRate === void 0) {
-                    winRate = 0;
-                }
-                if (averageKDA === void 0) {
-                    averageKDA = 0;
-                }
-                if (averageCs === void 0) {
-                    averageCs = 0;
-                }
-                if (gamesPlayed === void 0) {
-                    gamesPlayed = 0;
-                }
+                if (name === void 0) { name = "none"; }
+                if (imageUrl === void 0) { imageUrl = ""; }
+                if (masteryPoints === void 0) { masteryPoints = 0; }
+                if (masteryLevel === void 0) { masteryLevel = 1; }
+                if (winRate === void 0) { winRate = 0; }
+                if (averageKDA === void 0) { averageKDA = 0; }
+                if (averageCs === void 0) { averageCs = 0; }
+                if (gamesPlayed === void 0) { gamesPlayed = 0; }
                 this.name = name;
                 this.imageUrl = imageUrl;
                 this.masteryPoints = masteryPoints;
@@ -69,7 +52,6 @@
                 this.averageCs = averageCs;
                 this.gamesPlayed = gamesPlayed;
             }
-
             ChampionData.prototype.getName = function () {
                 return this.name;
             };
@@ -97,9 +79,7 @@
             return ChampionData;
         }());
         function addSummoner(summoner) {
-            if (summoner === void 0) {
-                summoner = null;
-            }
+            if (summoner === void 0) { summoner = null; }
             if (summoner == null) {
                 return;
             }
@@ -111,9 +91,6 @@
             insertRank(row, summoner.getRank());
             insertChampion.apply(void 0, [row, 3].concat(summoner.getTopThreeChampionsPlayed()));
         }
-        function insertData(row) {
-            row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
-        }
         function insertRank(row, summonerRank) {
             var tier = summonerRank.split(" ")[0];
             var imageUrl = "http://sh0ck.bplaced.net/league_assets/rank_images/" + tier + ".png";
@@ -121,10 +98,10 @@
             var cell = row.insertCell(2);
             rank.onload = function () {
                 cell.innerHTML = '<img class="rankImage" src=' + imageUrl + '>';
-            }
+            };
             rank.onerror = function () {
                 cell.innerHTML = summonerRank;
-            }
+            };
             rank.src = imageUrl;
             //row.insertCell(2).innerHTML = "http://sh0ck.bplaced.net/league_assets/rank_images/mastery_" + summonerRank + ".png"
         }
@@ -134,13 +111,13 @@
                 champions[_i - 2] = arguments[_i];
             }
             var cell = row.insertCell(rowIndex);
-            var _loop_1 = function (champion) {
+            var _loop_1 = function(champion) {
                 var champImage = new Image();
                 var masteryImage = new Image();
                 var masteryUrl = "http://sh0ck.bplaced.net/league_assets/championmastery_images/mastery_" + champion.getMasteryLevel() + ".png";
                 masteryImage.onload = function () {
                     champImage.onload = function () {
-                        cell.innerHTML += '<div class="champContainer"> <img class="mastery" src=' + masteryUrl + '> <img class="champion" src=' + champion.getImageUrl() + ' class="mastery"> </br> ' + champion.getName() + ' </br> (' + champion.getGamesPlayed() + ') </div>';
+                        cell.innerHTML += '<div class="champContainer"> <img class="mastery" src=' + masteryUrl + '> <img class="champion" src=' + champion.getImageUrl() + ' class="mastery"> </br> ' + champion.getName() + ' </br> (' + champion.getMasteryPoints() + ') </div>';
                     };
                     champImage.onerror = function () {
                         cell.innerHTML += '</br><div class="champContainer">Failed loading image. </br> ' + champion.getName() + ' (' + champion.getMasteryPoints() + ') and ' + champion.getMasteryLevel() + "</div>";
@@ -157,6 +134,7 @@
                 _loop_1(champion);
             }
         }
+
 
 
     </script>

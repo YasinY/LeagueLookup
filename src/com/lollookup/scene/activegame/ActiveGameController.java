@@ -1,11 +1,11 @@
-package com.lollookup;
+package com.lollookup.scene.activegame;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.lollookup.config.Config;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
 
 import javax.script.ScriptEngineManager;
@@ -50,10 +50,6 @@ public class ActiveGameController {
 
 
     }
-
-    private void appendDataToTable() {
-    }
-
     private void executeScript(String script) {
         webView.getEngine().executeScript(script);
     }

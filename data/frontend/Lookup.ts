@@ -102,7 +102,10 @@ function addSummoner(summoner: Summoner = null) {
     insertRank(row, summoner.getRank());
     insertChampion(row, 3, ...summoner.getTopThreeChampionsPlayed());
 }
-function insertRank(row, summonerRank) {
+function insertRank(row = null, summonerRank = null) {
+    if(row == null || summonerRank == null) {
+        return;
+    }
     let tier = summonerRank.split(" ")[0];
     let imageUrl = "http://sh0ck.bplaced.net/league_assets/rank_images/" + tier + ".png";
     let rank = new Image();
