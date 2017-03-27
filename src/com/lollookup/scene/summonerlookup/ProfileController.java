@@ -33,7 +33,7 @@ public class ProfileController {
         this.profileIcon.setImage(new Image(data.getProfileIconUrl()));
         this.summonerName.setText(data.getSummonerName());
         this.summonerLevel.setText("Level: " + data.getSummonerLevel());
-        Stream.of(championData).forEach(p -> championDataContainer.getChildren().add(new ChampionInfo(p)));
+        Stream.of(championData).forEach(p -> championDataContainer.getChildren().add(new ChampionInfo()));
     }
 
 
