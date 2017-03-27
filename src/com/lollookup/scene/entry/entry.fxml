@@ -18,11 +18,10 @@
       <Text layoutX="643.0" layoutY="542.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Made by Yasin Yazici " />
       <TextField fx:id="lookupTextField" layoutX="348.0" layoutY="162.0" prefHeight="25.0" prefWidth="205.0" />
       <ChoiceBox fx:id="regionsBox" layoutX="553.0" layoutY="162.0" prefHeight="25.0" prefWidth="135.0" />
-      <ProgressBar layoutX="246.0" layoutY="57.0" prefHeight="18.0" prefWidth="589.0" progress="0.0" />
       <Text layoutX="246.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="League lookup image here" wrappingWidth="589.0" />
-      <SplitMenuButton id="ag_lookup" fx:id="splitSubmitButton" layoutX="348.0" layoutY="187.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="151.0" text="Active game lookup">
+      <SplitMenuButton id="sum_lookup" fx:id="splitSubmitButton" layoutX="348.0" layoutY="187.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="151.0" text="Summoner lookup">
         <items>
-          <MenuItem id="sum_lookup" disable="true" mnemonicParsing="false" text="Summoner lookup" />
+          <MenuItem id="ag_lookup" disable="true" mnemonicParsing="false" text="Active game lookup" />
         </items>
       </SplitMenuButton>
    </children>

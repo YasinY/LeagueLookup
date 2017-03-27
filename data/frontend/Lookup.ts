@@ -3,14 +3,12 @@ class Summoner {
     private team: string;
     private rank: string;
     private currentChampionPlayed: ChampionData;
-    private topThreeChampionsPlayed: ChampionData[];
 
-    constructor(name: string, team: string, rank: string, currentChampionPlayed: ChampionData, ...topThreeChampionsPlayed: ChampionData[]) {
+    constructor(name: string, team: string, rank: string, currentChampionPlayed: ChampionData) {
         this.name = name;
         this.team = team;
         this.rank = rank;
         this.currentChampionPlayed = currentChampionPlayed;
-        this.topThreeChampionsPlayed = topThreeChampionsPlayed;
     }
 
     public getName() {
@@ -27,10 +25,6 @@ class Summoner {
 
     public getCurrentChampionPlayed() {
         return this.currentChampionPlayed;
-    }
-
-    public getTopThreeChampionsPlayed() {
-        return this.topThreeChampionsPlayed;
     }
 }
 
@@ -100,7 +94,6 @@ function addSummoner(summoner: Summoner = null) {
     insertChampion(row, 0, currentChampionPlayed);
     row.insertCell(1).innerHTML = summoner.getName() + ': </br>  Win rate in %: ' + currentChampionPlayed.getWinRate() + ' (' + currentChampionPlayed.getGamesPlayed() + ') </br> Average KDA: ' + currentChampionPlayed.getAverageKDA() + ':1 </br> Average CS: ' + currentChampionPlayed.getAverageCs() + ''; //name //
     insertRank(row, summoner.getRank());
-    insertChampion(row, 3, ...summoner.getTopThreeChampionsPlayed());
 }
 function insertRank(row = null, summonerRank = null) {
     if(row == null || summonerRank == null) {

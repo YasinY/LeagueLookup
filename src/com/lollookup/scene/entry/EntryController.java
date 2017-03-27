@@ -18,6 +18,7 @@ import javafx.stage.StageStyle;
  * @version 1.0
  */
 public class EntryController {
+
     @FXML
     private ImageView banner;
 
@@ -29,16 +30,9 @@ public class EntryController {
     @FXML
     private SplitMenuButton splitSubmitButton;
 
-    @FXML
-
     public void initialize() {
         setSplitSubmitButtonProperties();
         setRegionsBoxProperties();
-    }
-
-    private void setRegionsBoxProperties() {
-        regionsBox.setItems(FXCollections.observableArrayList("EUW", "EUNE", "NA", "KR", "JP", "BR", "LAN", "LAS", "OCE", "TR", "RU").sorted());
-        regionsBox.getSelectionModel().selectFirst();
     }
 
     private void setSplitSubmitButtonProperties() {
@@ -47,37 +41,36 @@ public class EntryController {
             splitSubmitButton.setText(pressedMenuItem.getText());
             splitSubmitButton.setId(pressedMenuItem.getId());
         }));
-        splitSubmitButton.setOnAction(action -> handleSubmit(splitSubmitButton.getId()));
+        splitSubmitButton.setOnAction(action -> {
+            try {
+                createLoadingScreenScene(splitSubmitButton.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         splitSubmitButton.setTooltip(new Tooltip("Select the kind of search you'd like to do."));
     }
 
-    private void handleSubmit(String id) {
-        switch (id.toLowerCase()) {
-            case "ag_lookup":
-                if (lookupTextField.getText().length() == 0) {
-                    return;
-                }
-                try {
-                    createScene();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //Create new scene
-                break;
-            case "sum_lookup":
-                System.out.println("Not implemented yet!");
-                break;
-            default:
-                break;
-        }
+    private void setRegionsBoxProperties() {
+        regionsBox.setItems(FXCollections.observableArrayList("EUW", "EUNE", "NA", "KR", "JP", "BR", "LAN", "LAS", "OCE", "TR", "RU").sorted());
+        regionsBox.getSelectionModel().selectFirst();
     }
 
-    private void createScene() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("./loadingscreen/loadingscreen.fxml"));
+
+    private void createLoadingScreenScene(String id) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
         Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setScene(new Scene((Parent) loader.load()));
+        stage.setScene(new Scene(loader.load()));
         LoadingScreenController controller = loader.getController();
-        controller.loadData();
+        String summonerName = lookupTextField.getText();
+        String region = regionsBox.getSelectionModel().getSelectedItem();
+        controller.setSummoner(summonerName, region);
+        switch(id.toLowerCase()) {
+            case "ag_lookup":
+                controller.loadActiveGame();
+            case "sum_lookup":
+                controller.loadProfile();
+        }
         stage.show();
 
     }

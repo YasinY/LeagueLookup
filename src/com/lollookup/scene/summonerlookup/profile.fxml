@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.scene.summonerlookup.ProfileController">
+   <children>
+      <Pane prefHeight="168.0" prefWidth="840.0">
+         <children>
+            <ImageView fx:id="profileIcon" fitHeight="128.0" fitWidth="128.0" layoutX="14.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D height="128.0" width="128.0" />
+               </viewport>
+            </ImageView>
+            <Text fx:id="summonerName" layoutX="142.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerName" wrappingWidth="403.13671875">
+               <font>
+                  <Font name="Segoe UI Light" size="25.0" />
+               </font>
+            </Text>
+            <Text fx:id="summonerLevel" layoutX="142.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerLevel" wrappingWidth="353.13671875">
+               <font>
+                  <Font name="Segoe UI Light" size="25.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Separator layoutY="167.0" prefHeight="10.0" prefWidth="840.0" />
+      <VBox fx:id="championDataContainer" layoutY="172.0" prefHeight="485.0" prefWidth="170.0" />
+   </children>
+</AnchorPane>
