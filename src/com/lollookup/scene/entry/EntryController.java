@@ -61,6 +61,7 @@ public class EntryController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
+        stage.show();
         LoadingScreenController controller = loader.getController();
         String summonerName = lookupTextField.getText();
         String region = regionsBox.getSelectionModel().getSelectedItem();
@@ -71,7 +72,7 @@ public class EntryController {
             case "sum_lookup":
                 controller.loadProfile();
         }
-        stage.show();
+        stage.close();
 
     }
 

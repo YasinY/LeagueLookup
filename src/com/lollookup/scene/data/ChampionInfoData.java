@@ -6,13 +6,15 @@ package com.lollookup.scene.data;
 public class ChampionInfoData {
 
     private String url;
+    private String name;
     private String KDA;
     private String winRate;
     private String masteryScore;
     private String masteryLevel;
 
-    public ChampionInfoData(String url, String kda, String winRate, String masteryScore, String masteryLevel) {
+    public ChampionInfoData(String url, String name, String kda, String winRate, String masteryScore, String masteryLevel) {
         this.url = url;
+        this.name = name;
         this.KDA = kda;
         this.winRate = winRate;
         this.masteryScore = masteryScore;
@@ -21,6 +23,10 @@ public class ChampionInfoData {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getKDA() {

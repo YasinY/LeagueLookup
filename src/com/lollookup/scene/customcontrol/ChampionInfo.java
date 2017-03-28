@@ -3,14 +3,11 @@ package com.lollookup.scene.customcontrol;
 import com.lollookup.scene.data.ChampionInfoData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 
 /**
@@ -20,6 +17,9 @@ public class ChampionInfo extends Pane {
 
     @FXML
     private ImageView championImage;
+
+    @FXML
+    private Text name;
 
     @FXML
     private Text KDA;
@@ -33,20 +33,21 @@ public class ChampionInfo extends Pane {
     @FXML
     private Text masteryLevel;
 
-    public ChampionInfo() {
+    public ChampionInfo(ChampionInfoData championInfoData) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("championinfo.fxml"));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("championinfo.fxml"));
+            fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setData(ChampionInfoData championInfoData) {
         this.championImage.setImage(new Image(championInfoData.getUrl()));
-        this.KDA.setTextContent(championInfoData.getKDA());
-        this.winRate.setTextContent(championInfoData.getWinRate());
-        this.masteryScore.setTextContent(championInfoData.getMasteryScore());
-        this.masteryLevel.setTextContent(championInfoData.getMasteryLevel());
+        this.name.setText(championInfoData.getName());
+        this.KDA.setText("KDA: " + championInfoData.getKDA());
+        this.winRate.setText("Win rate: " + championInfoData.getWinRate());
+        this.masteryScore.setText("Mastery score: " + championInfoData.getMasteryScore());
+        this.masteryLevel.setText("Mastery leve: " + championInfoData.getMasteryLevel());
     }
 
 }

@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -118,20 +119,17 @@ public class LoadingScreenController implements Initializable {
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
         ProfileController controller = loader.getController();
-        ChampionInfoData[] championStatsSummary = leagueAPI.getChampionStatsRanked(summoner.getId(), Season.SEASON_7).getChampionStatsSummary().stream().map(element -> {
+        List<ChampionMastery> championMasteries = leagueAPI.getChampionMasteries(summoner.getId());
+        ChampionInfoData[] championStatsSummary = leagueAPI.getChampionStatsRanked(summoner.getId(), Season.SEASON_7).getChampionStatsSummary().stream().filter(element -> element.getId() != 0).map(element -> {
             try {
-                if(element.getId() == 0) {
-                    return null;
-                }
                 ChampionStats championStats = element.getChampionStats();
-                return new ChampionInfoData(leagueAPI.getImageUrl(element.getId()), championStats.displayAverageKDA(), championStats.displayWinrate(), championStats.displayAverageCreepScore(), "0");
+                int championId = element.getId();
+                return new ChampionInfoData(leagueAPI.getImageUrl(championId), leagueAPI.getChampionData(championId).getName(), championStats.displayAverageKDA(), championStats.displayWinrate(), championStats.displayAverageCreepScore(), String.valueOf(championMasteries.get(0).getChampionLevel()));
             } catch (ReplyException | DataException | IOException | WrongRequestFormatException e) {
                 e.printStackTrace();
             }
             return null;
         }).toArray(ChampionInfoData[]::new);
-
-
         controller.createProfile(new SummonerData("http://avatar.leagueoflegends.com/" + summoner.getRegion().getShortCode() + "/" + summonerName.replace(" ", "") + ".png", summonerName, String.valueOf(summoner.getSummonerLevel())), championStatsSummary);
         stage.show();
     }
