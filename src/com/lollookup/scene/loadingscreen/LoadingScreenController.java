@@ -101,7 +101,7 @@ public class LoadingScreenController implements Initializable {
                 Stage stage = new Stage(StageStyle.DECORATED);
                 stage.setScene(new Scene(loader.load()));
                 ActiveGameController activeGameController = loader.getController();
-                activeGameController.loadActiveGame(); //Usually would get the local summoner
+                activeGameController.loadActiveGame();
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -114,20 +114,17 @@ public class LoadingScreenController implements Initializable {
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
         ProfileController controller = loader.getController();
-        progressText.setText("TEST");
         Task task = championDataTask();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(task);
         leagueEntries = leagueAPI.getLeagueEntries(summoner.getId()).values();
         task.setOnSucceeded((x) -> {
             controller.createProfile(new SummonerData(summoner, leagueEntries), championInfoDatas);
-            progressText.setText("DONE WITH TEST");
             stage.show();
         });
     }
 
     private Task championDataTask() {
-        progressText.setText("TES11T");
         return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
