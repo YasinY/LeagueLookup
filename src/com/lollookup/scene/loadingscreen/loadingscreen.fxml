@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.scene.loadingscreen.LoadingScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.scene.loadingscreen.LoadingScreenController">
    <children>
-      <Text fx:id="progressText" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading.." wrappingWidth="600.0" />
-      <ProgressBar fx:id="progressBar" layoutY="191.0" prefHeight="18.0" prefWidth="600.0" progress="0.0" />
+      <ImageView fx:id="loadingImage" fitHeight="348.0" fitWidth="560.0" layoutX="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="progressText" layoutX="116.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="progress" wrappingWidth="560.0" />
    </children>
 </AnchorPane>

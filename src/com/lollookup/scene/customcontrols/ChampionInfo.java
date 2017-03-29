@@ -1,4 +1,4 @@
-package com.lollookup.scene.customcontrol;
+package com.lollookup.scene.customcontrols;
 
 import com.lollookup.scene.data.ChampionInfoData;
 import javafx.fxml.FXML;
@@ -33,6 +33,12 @@ public class ChampionInfo extends Pane {
     @FXML
     private Text masteryLevel;
 
+    @FXML
+    private Text totalPlayed;
+
+    @FXML
+    private Text averageCS;
+
     public ChampionInfo(ChampionInfoData championInfoData) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("championinfo.fxml"));
         fxmlLoader.setController(this);
@@ -47,7 +53,9 @@ public class ChampionInfo extends Pane {
         this.KDA.setText("KDA: " + championInfoData.getKDA());
         this.winRate.setText("Win rate: " + championInfoData.getWinRate());
         this.masteryScore.setText("Mastery score: " + championInfoData.getMasteryScore());
-        this.masteryLevel.setText("Mastery leve: " + championInfoData.getMasteryLevel());
+        this.masteryLevel.setText("Mastery level: " + championInfoData.getMasteryLevel());
+        this.totalPlayed.setText("Total played: " + championInfoData.getTotalSessionsPlayed());
+        this.averageCS.setText("Average CS: " + championInfoData.getAverageCS());
     }
 
 }

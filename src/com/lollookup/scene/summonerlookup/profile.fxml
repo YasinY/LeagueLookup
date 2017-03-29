@@ -7,7 +7,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.scene.summonerlookup.ProfileController">
    <children>
       <Pane prefHeight="168.0" prefWidth="840.0">
@@ -17,19 +16,32 @@
                   <Rectangle2D height="128.0" width="128.0" />
                </viewport>
             </ImageView>
-            <Text fx:id="summonerName" layoutX="142.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerName" wrappingWidth="403.13671875">
+            <Text fx:id="summonerName" layoutX="159.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerName" wrappingWidth="403.13671875">
                <font>
                   <Font name="Segoe UI Light" size="25.0" />
                </font>
             </Text>
-            <Text fx:id="summonerLevel" layoutX="142.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerLevel" wrappingWidth="353.13671875">
+            <Text fx:id="summonerLevel" layoutX="159.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="summonerLevel" wrappingWidth="353.13671875">
                <font>
                   <Font name="Segoe UI Light" size="25.0" />
                </font>
             </Text>
+            <Button layoutX="431.0" layoutY="129.0" mnemonicParsing="false" text="Lookup game" />
+            <Button layoutX="336.0" layoutY="129.0" mnemonicParsing="false" text="Refresh stats" />
          </children>
       </Pane>
       <Separator layoutY="167.0" prefHeight="10.0" prefWidth="840.0" />
-      <VBox fx:id="championDataContainer" layoutY="172.0" prefHeight="485.0" prefWidth="170.0" />
+      <BorderPane layoutY="171.0" prefHeight="486.0" prefWidth="840.0">
+         <left>
+            <ScrollPane prefHeight="486.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+               <content>
+                  <VBox fx:id="championDataContainer" prefHeight="483.0" prefWidth="273.0" />
+               </content>
+            </ScrollPane>
+         </left>
+         <center>
+            <HBox fx:id="rankDataContainer" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

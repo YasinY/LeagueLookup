@@ -2,7 +2,11 @@ package com.lollookup.scene.entry;
 
 import com.lollookup.scene.loadingscreen.LoadingScreenController;
 import com.lollookup.scene.loadingscreen.LoadingScreenScene;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
+
+import java.io.IOException;
+import java.util.concurrent.*;
 
 
 /**
@@ -61,19 +69,15 @@ public class EntryController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
-        stage.show();
         LoadingScreenController controller = loader.getController();
-        String summonerName = lookupTextField.getText();
-        String region = regionsBox.getSelectionModel().getSelectedItem();
-        controller.setSummoner(summonerName, region);
-        switch(id.toLowerCase()) {
+        controller.setSummoner(lookupTextField.getText(), regionsBox.getSelectionModel().getSelectedItem());
+        switch (id.toLowerCase()) {
             case "ag_lookup":
                 controller.loadActiveGame();
             case "sum_lookup":
                 controller.loadProfile();
         }
-        stage.close();
-
+        stage.show();
     }
 
 }
