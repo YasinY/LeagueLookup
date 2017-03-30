@@ -2,19 +2,20 @@ package com.lollookup.scene.customcontrols;
 
 import com.yasinyazici.riot.data.summoner.ranked.league.LeagueEntry;
 import com.yasinyazici.riot.data.summoner.ranked.league.LeagueEntryData;
+import com.yasinyazici.riot.data.summoner.ranked.league.QueueType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 
 /**
  * @author Yasin
  */
-public class RankInfo extends VBox {
+public class RankInfo extends Pane {
 
     @FXML
     private Text queueType;
@@ -23,7 +24,7 @@ public class RankInfo extends VBox {
     private ImageView rankImage;
 
     @FXML
-    private Text divisonName;
+    private Text divisionName;
 
     @FXML
     private Text rank;
@@ -42,9 +43,11 @@ public class RankInfo extends VBox {
             e.printStackTrace();
         }
         LeagueEntryData leagueEntryData = leagueEntry.getEntries().get(0);
-        rankImage.setImage(new Image(""));
-        divisonName.setTextContent(leagueEntry.getName());
-        rank.setTextContent("Rank: " + leagueEntry.getTier() + " " + leagueEntryData.getDivision());
-        lpAmount.setTextContent("LP: " + leagueEntryData.getLeaguePoints());
+        String tier = leagueEntry.getTier();
+        queueType.setText(QueueType.identifyQueueType(leagueEntry.getQueue()).getName());
+        rankImage.setImage(new Image("http://sh0ck.bplaced.net/league_assets/rank_images/" + tier.toLowerCase() + ".png"));
+        divisionName.setText(leagueEntry.getName());
+        rank.setText(tier + " " + leagueEntryData.getDivision());
+        lpAmount.setText(leagueEntryData.getLeaguePoints() + " LP");
     }
 }

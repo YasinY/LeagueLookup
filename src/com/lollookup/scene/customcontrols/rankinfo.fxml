@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="230.0" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="230.0" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="queueType" strokeType="OUTSIDE" strokeWidth="0.0" text="queueType">
-         <VBox.margin>
-            <Insets left="90.0" />
-         </VBox.margin>
-      </Text>
-      <ImageView fx:id="rankImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets left="15.0" top="10.0" />
-         </VBox.margin>
-      </ImageView>
-      <Text fx:id="divisionName" strokeType="OUTSIDE" strokeWidth="0.0" text="divisionName">
-         <VBox.margin>
-            <Insets left="70.0" />
-         </VBox.margin>
-      </Text>
-      <Text fx:id="rank" strokeType="OUTSIDE" strokeWidth="0.0" text="rank">
-         <VBox.margin>
-            <Insets left="90.0" />
-         </VBox.margin>
-      </Text>
-      <Text fx:id="lpAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="lpAmount">
-         <VBox.margin>
-            <Insets bottom="50.0" left="75.0" top="20.0" />
-         </VBox.margin>
-      </Text>
+      <Separator orientation="VERTICAL" prefHeight="403.0" prefWidth="8.0" />
+      <VBox prefHeight="403.0" prefWidth="230.0">
+         <children>
+            <Text fx:id="queueType" strokeType="OUTSIDE" strokeWidth="0.0" text="queueType" textAlignment="CENTER" wrappingWidth="169.623046875">
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+            </Text>
+            <ImageView fx:id="rankImage" fitHeight="129.0" fitWidth="170.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Text fx:id="divisionName" strokeType="OUTSIDE" strokeWidth="0.0" text="divisionName" textAlignment="CENTER" wrappingWidth="123.140625">
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </Text>
+            <Text fx:id="rank" strokeType="OUTSIDE" strokeWidth="0.0" text="rank" textAlignment="CENTER" wrappingWidth="71.033203125">
+               <VBox.margin>
+                  <Insets left="75.0" />
+               </VBox.margin>
+            </Text>
+            <Text fx:id="lpAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="lpAmount" textAlignment="CENTER" wrappingWidth="79.716796875">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="70.0" />
+               </VBox.margin>
+            </Text>
+         </children>
+      </VBox>
    </children>
 </fx:root>

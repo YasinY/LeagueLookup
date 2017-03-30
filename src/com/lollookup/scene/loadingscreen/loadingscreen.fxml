@@ -8,7 +8,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lollookup.scene.loadingscreen.LoadingScreenController">
    <children>
-      <ImageView fx:id="loadingImage" fitHeight="348.0" fitWidth="560.0" layoutX="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="loadingImage" fitHeight="203.0" fitWidth="243.0" layoutX="289.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="placeholderImage" fitHeight="132.0" fitWidth="167.0" layoutX="296.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
       <Text fx:id="progressText" layoutX="116.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="progress" wrappingWidth="560.0" />
    </children>
 </AnchorPane>

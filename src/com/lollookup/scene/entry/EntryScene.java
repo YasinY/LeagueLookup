@@ -2,7 +2,6 @@ package com.lollookup.scene.entry;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,9 +12,11 @@ import javafx.stage.Stage;
 public class EntryScene extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("entry.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/entry/entry.fxml"));
+        primaryStage.setScene(new Scene(loader.load()));
+        EntryController entryController = loader.getController();
+        entryController.setStage(primaryStage);
         primaryStage.setTitle("League Lookup");
-        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

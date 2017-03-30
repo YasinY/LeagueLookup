@@ -11,7 +11,12 @@
    <children>
       <Pane prefHeight="168.0" prefWidth="840.0">
          <children>
-            <ImageView fx:id="profileIcon" fitHeight="128.0" fitWidth="128.0" layoutX="14.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profileIcon" fitHeight="128.0" fitWidth="128.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D height="128.0" width="128.0" />
+               </viewport>
+            </ImageView>
+            <ImageView fx:id="profileIconBorder" fitHeight="128.0" fitWidth="128.0" layoutX="7.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
                   <Rectangle2D height="128.0" width="128.0" />
                </viewport>
@@ -28,6 +33,7 @@
             </Text>
             <Button layoutX="431.0" layoutY="129.0" mnemonicParsing="false" text="Lookup game" />
             <Button layoutX="336.0" layoutY="129.0" mnemonicParsing="false" text="Refresh stats" />
+            <Button layoutX="243.0" layoutY="128.0" mnemonicParsing="false" onAction="#createNewLookup" text="New lookup" />
          </children>
       </Pane>
       <Separator layoutY="167.0" prefHeight="10.0" prefWidth="840.0" />

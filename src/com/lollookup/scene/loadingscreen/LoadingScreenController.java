@@ -4,6 +4,7 @@ import com.lollookup.scene.activegame.ActiveGameController;
 import com.lollookup.scene.data.ChampionInfoData;
 import com.lollookup.scene.data.SummonerData;
 import com.lollookup.scene.summonerlookup.ProfileController;
+import com.lollookup.scene.summonerlookup.ProfileScene;
 import com.yasinyazici.riot.LeagueAPI;
 import com.yasinyazici.riot.data.champion.ChampionImage;
 import com.yasinyazici.riot.data.championmastery.ChampionMastery;
@@ -31,9 +32,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 /**
  * @author Yasin on 20.03.2017.
@@ -41,6 +44,9 @@ import java.util.concurrent.Executors;
  */
 public class LoadingScreenController implements Initializable {
 
+
+    @FXML
+    private ImageView placeholderImage;
 
     @FXML
     private ImageView loadingImage;
@@ -55,6 +61,8 @@ public class LoadingScreenController implements Initializable {
     private Collection<List<LeagueEntry>> leagueEntries;
 
     private ChampionInfoData[] championInfoDatas;
+
+    private Stage[] previousStages;
 
     public void setSummoner(String summonerName, String region) {
         this.leagueAPI = new LeagueAPI(Region.parseRegion(region));
@@ -119,6 +127,7 @@ public class LoadingScreenController implements Initializable {
         executorService.submit(task);
         leagueEntries = leagueAPI.getLeagueEntries(summoner.getId()).values();
         task.setOnSucceeded((x) -> {
+            Stream.of(previousStages).filter(Objects::nonNull).forEach(Stage::close);
             controller.createProfile(new SummonerData(summoner, leagueEntries), championInfoDatas);
             stage.show();
         });
@@ -148,6 +157,11 @@ public class LoadingScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadingImage.setImage(new Image("https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif"));
+        placeholderImage.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/sleeping_poro.gif"));
+        loadingImage.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/loading.gif"));
+    }
+
+    public void setPreviousStages(Stage ... previousStages) {
+        this.previousStages = previousStages;
     }
 }

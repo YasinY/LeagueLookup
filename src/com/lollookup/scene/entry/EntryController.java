@@ -1,31 +1,29 @@
 package com.lollookup.scene.entry;
 
 import com.lollookup.scene.loadingscreen.LoadingScreenController;
-import com.lollookup.scene.loadingscreen.LoadingScreenScene;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
-import java.io.IOException;
-import java.util.concurrent.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
  * @author Yasin on 20.03.2017.
  * @version 1.0
  */
-public class EntryController {
+public class EntryController implements Initializable{
+
+    @FXML
+    private ImageView logo;
 
     @FXML
     private ImageView banner;
@@ -38,10 +36,8 @@ public class EntryController {
     @FXML
     private SplitMenuButton splitSubmitButton;
 
-    public void initialize() {
-        setSplitSubmitButtonProperties();
-        setRegionsBoxProperties();
-    }
+    private Stage stage;
+
 
     private void setSplitSubmitButtonProperties() {
         splitSubmitButton.getItems().forEach(menuItem -> menuItem.setOnAction(event -> {
@@ -64,12 +60,12 @@ public class EntryController {
         regionsBox.getSelectionModel().selectFirst();
     }
 
-
     private void createLoadingScreenScene(String id) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
         LoadingScreenController controller = loader.getController();
+        controller.setPreviousStages(this.stage, stage);
         controller.setSummoner(lookupTextField.getText(), regionsBox.getSelectionModel().getSelectedItem());
         switch (id.toLowerCase()) {
             case "ag_lookup":
@@ -80,4 +76,16 @@ public class EntryController {
         stage.show();
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setSplitSubmitButtonProperties();
+        setRegionsBoxProperties();
+        logo.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/league_lookup.png"));
+        banner.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/champion/Riven_4.png" ));
+    }
 }
