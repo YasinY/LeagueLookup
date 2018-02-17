@@ -13,7 +13,6 @@ public class ProfileScene extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile.fxml"));
-        //fxmlLoader.setController(new LoadingScreenController("simon"));
         primaryStage.setTitle("League Lookup");
         primaryStage.setScene(new Scene(fxmlLoader.load()));
         primaryStage.show();

@@ -1,6 +1,7 @@
 package com.lollookup.scene.entry;
 
 import com.lollookup.scene.loadingscreen.LoadingScreenController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,20 +62,28 @@ public class EntryController implements Initializable{
         regionsBox.getSelectionModel().selectFirst();
     }
 
-    private void createLoadingScreenScene(String id) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setScene(new Scene(loader.load()));
-        LoadingScreenController controller = loader.getController();
-        controller.setPreviousStages(this.stage, stage);
-        controller.setSummoner(lookupTextField.getText(), regionsBox.getSelectionModel().getSelectedItem());
-        switch (id.toLowerCase()) {
-            case "ag_lookup":
-                controller.loadActiveGame();
-            case "sum_lookup":
-                controller.loadProfile();
-        }
-        stage.show();
+    private void createLoadingScreenScene(String id) {
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/loadingscreen/loadingscreen.fxml"));
+            Stage stage = new Stage(StageStyle.DECORATED);
+            try {
+                stage.setScene(new Scene(loader.load()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            LoadingScreenController controller = loader.getController();
+            controller.setPreviousStage(this.stage);
+            controller.setCurrentStage(stage);
+            controller.setSummoner(lookupTextField.getText(), regionsBox.getSelectionModel().getSelectedItem());
+            switch (id.toLowerCase()) {
+                case "ag_lookup":
+                    controller.loadActiveGame();
+                case "sum_lookup":
+                    controller.loadProfile();
+            }
+            stage.show();
+        });
+
     }
 
     public void setStage(Stage stage) {
@@ -85,7 +95,7 @@ public class EntryController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         setSplitSubmitButtonProperties();
         setRegionsBoxProperties();
-        logo.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/league_lookup.png"));
-        banner.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/champion/Riven_4.png" ));
+        logo.setImage(new Image("http://www.it-processes.com/league_assets/utils/league_lookup.png"));
+        banner.setImage(new Image("http://www.it-processes.com/league_assets/champion/Riven_4.png" ));
     }
 }

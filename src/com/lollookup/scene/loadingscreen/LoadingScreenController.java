@@ -30,18 +30,12 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
-/**
- * @author Yasin on 20.03.2017.
- * @version 1.0
- */
+
 public class LoadingScreenController implements Initializable {
 
 
@@ -62,20 +56,22 @@ public class LoadingScreenController implements Initializable {
 
     private ChampionInfoData[] championInfoDatas;
 
-    private Stage[] previousStages;
+    private Stage previousStage;
+
+    private Stage currentStage;
 
     public void setSummoner(String summonerName, String region) {
         this.leagueAPI = new LeagueAPI(Region.parseRegion(region));
         progressText.setText("Grabbing data..");
         try {
             this.summoner = leagueAPI.getSummoner(summonerName);
-            progressText.setText("Got data..");
+            progressText.setText("Got data, now processing!");
         } catch (DataException e) {
             progressText.setText("Invalid data given");
         } catch (WrongRequestFormatException e) {
             progressText.setText("Something went wrong while creating a request");
         } catch (ReplyException e) {
-            progressText.setText("Too many requests within a certain timespan, please try again later.");
+            progressText.setText("Too many requests within a certain time span, please try again later.");
         } catch (IOException e) {
             progressText.setText("I/O Error, please check your internet connection or try again later.");
         }
@@ -84,7 +80,6 @@ public class LoadingScreenController implements Initializable {
     public void loadProfile() {
         if (summoner != null) {
             try {
-                System.out.println("Loading profile scene");
                 createProfileScene();
             } catch (DataException | WrongRequestFormatException | ReplyException | IOException e) {
                 e.printStackTrace();
@@ -118,16 +113,23 @@ public class LoadingScreenController implements Initializable {
     }
 
     private void createProfileScene() throws IOException, DataException, WrongRequestFormatException, ReplyException {
+
+        progressText.setText("Setting up scene..");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lollookup/scene/summonerlookup/profile.fxml"));
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setScene(new Scene(loader.load()));
         ProfileController controller = loader.getController();
+        progressText.setText("Loading controller..");
         Task task = championDataTask();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(task);
+        progressText.setText("Grabbed data, loading further summoner statistics");
         leagueEntries = leagueAPI.getLeagueEntries(summoner.getId()).values();
+        progressText.setText("Loading league ranks ");
         task.setOnSucceeded((x) -> {
-            Stream.of(previousStages).filter(Objects::nonNull).forEach(Stage::close);
+            controller.setPreviousStages(previousStage, currentStage);
+            controller.setCurrentStage(stage);
+            progressText.setText("Done loading! a new window should now open up.");
             controller.createProfile(new SummonerData(summoner, leagueEntries), championInfoDatas);
             stage.show();
         });
@@ -137,13 +139,14 @@ public class LoadingScreenController implements Initializable {
         return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                List<ChampionMastery> championMasteries = leagueAPI.getChampionMasteries(summoner.getId());
+                ChampionMastery[] championMasteries = leagueAPI.getChampionMasteries(summoner.getId());
                 championInfoDatas = leagueAPI.getChampionStatsRanked(summoner.getId(), Season.SEASON_7).getChampionStatsSummary().stream().filter(element -> element.getId() != 0).map(element -> {
                     try {
                         ChampionStats championStats = element.getChampionStats();
                         int championId = element.getId();
-                        ChampionMastery championMastery = championMasteries.stream().filter(champion -> champion.getChampionId() == championId).findAny().orElse(null);
+                        ChampionMastery championMastery = Arrays.stream(championMasteries).filter(champion -> champion.getChampionId() == championId).findAny().orElse(null);
                         ChampionImage championData = leagueAPI.getChampionData(championId);
+                        progressText.setText("Loading champion: " + championData.getName() + ", " + championData.getTitle());
                         return new ChampionInfoData(leagueAPI.getImageUrl(championData), championData.getName(), championStats.displayAverageKDA(), championStats.displayWinrate(), String.valueOf(championMastery.getChampionPoints()), String.valueOf(championMastery.getChampionLevel()), String.valueOf(championStats.getAverageCreepScore()), String.valueOf(championStats.getTotalSessionsPlayed()));
                     } catch (ReplyException | DataException | IOException | WrongRequestFormatException e) {
                         e.printStackTrace();
@@ -157,11 +160,19 @@ public class LoadingScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        placeholderImage.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/sleeping_poro.gif"));
-        loadingImage.setImage(new Image("http://www.sh0ck.bplaced.net/league_assets/utils/loading.gif"));
+        placeholderImage.setImage(new Image("http://www.it-processes.com/league_assets/utils/sleeping_poro.gif"));
+        loadingImage.setImage(new Image("http://www.it-processes.com/league_assets/utils/loading.gif"));
     }
 
-    public void setPreviousStages(Stage ... previousStages) {
-        this.previousStages = previousStages;
+    public void setPreviousStage(Stage previousStage) {
+        this.previousStage = previousStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
+
+    public Stage getCurrentStage() {
+        return currentStage;
     }
 }

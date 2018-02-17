@@ -5,4 +5,10 @@ package com.lollookup.launcher;
  * @version 1.0
  */
 public class Launcher {
+
+    public static void main(String[] args) {
+        System.out.println(String.valueOf("d4cP5dWY8SCdlZslpDwoSuzKi5YgqGsyCfmzwWryr0emCkxZRtX").equals("d4cP5dWY8SCdlZslpDwoSuzKi5YgqGsyCfmzwWryr0emCkxZRtX"));
+        System.out.println(String.valueOf("d4cP5dWY8SCdlZslpDwoSuzKi5YgqGsyCfmzwWryr0emCkxZRtX".length()));
+    }
+
 }
